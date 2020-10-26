@@ -16,7 +16,8 @@ const registerUser = async(user) =>{
       const {user:{uid}}= res;
       return uid;
     }).then((uid)=>{
-
+      user.uid = uid;
+      dbService.collection(`management/user/${uid}/`).add(user)
     });
   }catch(e){
     console.log(e.message)
@@ -31,7 +32,7 @@ const loginUser = async(loginType) =>{
   }else if(loginType === "facebook"){
       provider = new firebaseInstance.auth.FacebookAuthProvider();
   }
-  await authService.signInWithPopup(provider)
+  await authService.signInWithPopup(provider).then(res=>console.log(res))
 }
 const regiValidation =(type,value) =>{
 
