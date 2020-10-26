@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {firebaseInstance,authService} from '../fbase';
-
+import {loginUser} from "../requesters/userCheck";
 const Login = ({setGoRegister}) =>{
   const [userId,setUserId] = useState("");
   const [userPassword,setUserPassword] = useState("");
@@ -15,14 +15,7 @@ const Login = ({setGoRegister}) =>{
   }
   const buttonClick = async (event) =>{
     const {target:{name}} = event;
-
-    let provider ;
-    if(name === "google"){
-        provider = new firebaseInstance.auth.GoogleAuthProvider();
-    }else if(name === "facebook"){
-        provider = new firebaseInstance.auth.FacebookAuthProvider();
-    }
-    await authService.signInWithPopup(provider);
+    loginUser(name)
   }
 
   const onSubmit = async (event) =>{
@@ -34,7 +27,6 @@ const Login = ({setGoRegister}) =>{
       console.log("error", e.message);
     }
   }
-  console.log("dd")
   return (
   <>
     <div className="test"></div>

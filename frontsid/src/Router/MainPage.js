@@ -10,8 +10,7 @@ const StyledContainer = styled.div`
   position:relative;
   `;
 const StyledLoginDiv = styled.div`
-  width:400px;
-  height:300px;
+  width:450px;
   position:absolute;
   top:50%;
   left:50%;
@@ -19,6 +18,7 @@ const StyledLoginDiv = styled.div`
   background:white;
   padding :50px;
   box-sizing:border-box;
+  min-height:400px;
 `;
 const MainPage = () =>{
   const [goRegister,setGoRegister] =useState(false);

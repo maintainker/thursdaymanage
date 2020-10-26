@@ -1,36 +1,67 @@
-import {authService} from "../fbase";
+import {authService,firebaseInstance,dbService} from "../fbase";
 
 // 로그인시 db에 있는지 확인 하는 함수
-const checkIdAfterLogin = () =>{
-  let checkId = false;
-  // 검증로직 여기에
-  if(!checkId){
-    //파베 로그인 후 없는 아이디 이후 회원가입 페이지로 이동
-  }else{
-    //유저 정보를 db에서 가져오는 로직
-    //페이지 이동 로직
-  }
-}
-
-const registerUser =() =>{
+const checkIdAfterLogin = (displayName,email,photoURL,uid) =>{
   let checkUser = false;
-  //1차로 인증에서 확인은 해주지만 2차 db에 유저정보 있는지 검증로직 
-  //-> 회원가입하다가 나가버린경우를 위해서? 
-  if(checkUser){
-    //유저 있으면 로직
-  }else{
-    // 유저 없으면 간편 회원가입 
-    // 이후 회원 상세 정보 입력후 가입 로직
-    // 회원가입후 상세 페이지 이동로직
+  
+
+  return checkUser;
+}
+
+const registerUser = async(user) =>{
+
+  try{
+    await authService.createUserWithEmailAndPassword(user.email,user.password)
+    .then((res)=>{
+      const {user:{uid}}= res;
+      return uid;
+    }).then((uid)=>{
+
+    });
+  }catch(e){
+    console.log(e.message)
   }
 }
 
-const loginUser = () =>{
-  //
+const loginUser = async(loginType) =>{
+  
+  let provider ;
+  if(loginType === "google"){
+      provider = new firebaseInstance.auth.GoogleAuthProvider();
+  }else if(loginType === "facebook"){
+      provider = new firebaseInstance.auth.FacebookAuthProvider();
+  }
+  await authService.signInWithPopup(provider)
+}
+const regiValidation =(type,value) =>{
+
+  let valCh = true;
+  switch (type) {
+    case "email":
+      const atIdx = value.indexOf("@");
+      const dotIdx = value.indexOf(".");
+      if( atIdx <= 0 || dotIdx <=0 || atIdx>dotIdx || dotIdx === value.length-1){
+        valCh = false;
+      }
+      return valCh;
+  
+    case "password":
+      const reg = /^[A-Za-z0-9]{6,12}$/;
+      if(!reg.test(value)){
+        valCh = false;
+      }
+      return valCh;
+
+    // case value:
+  
+    //   break;
+    default:
+
+      return false;
+  }
 }
 
 
-
-export default {checkIdAfterLogin,registerUser};
+export {loginUser,checkIdAfterLogin,registerUser,regiValidation};
 
 
