@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {firebaseInstance,authService} from '../fbase';
+import {authService} from '../fbase';
 import {loginUser} from "../requesters/userCheck";
 const Login = ({setGoRegister}) =>{
   const [userId,setUserId] = useState("");

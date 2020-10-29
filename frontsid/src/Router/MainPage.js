@@ -2,12 +2,13 @@ import styled from 'styled-components';
 import Login from '../components/Login';
 import { useState } from 'react';
 import Register from '../components/RegisterPage';
-
+import backgroundImg from '../asset/img/background.jpg'
 const StyledContainer = styled.div`
   width:100%;
   height:100vh;
-  background:red;
+  background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),url(${backgroundImg}) center;
   position:relative;
+
   `;
 const StyledLoginDiv = styled.div`
   width:450px;
@@ -31,4 +32,4 @@ const MainPage = () =>{
   </StyledContainer>);
 }
 
-export default MainPage
+export default MainPage;
